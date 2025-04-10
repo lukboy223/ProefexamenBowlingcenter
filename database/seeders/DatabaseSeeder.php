@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Extra;
 use App\Models\Person;
 use App\Models\Reservation;
 use App\Models\ReservationExtra;
@@ -26,6 +27,19 @@ class DatabaseSeeder extends Seeder
 
         // Reservation::factory(200)->create();
         Person::factory(100)->create();
+        
+        Extra::factory()->create([
+            'Name' => 'Snackpakket basis'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Snackpakket luxe'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Kinderpartij'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Vrijgezellenfeest'
+        ]);
         ReservationExtra::factory(100)->create();
     }
 }

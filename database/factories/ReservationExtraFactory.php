@@ -20,7 +20,7 @@ class ReservationExtraFactory extends Factory
     {
         return [
             'ReservationId' => fake()->numberBetween(1, 100),
-            'ExtrasId' => Extra::factory()
+            'ExtrasId' => fake()->numberBetween(1, 4)
         ];
     }
 }

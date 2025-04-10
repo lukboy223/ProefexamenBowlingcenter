@@ -68,7 +68,7 @@ return new class extends Migration
         POE.Kids, 
         RES.Price
         
-        order by RES.ReservationDate
+        order by RES.ReservationDate desc, RES.ReservationTime desc
         limit givLIMIT offset givOFFSET;
 
 

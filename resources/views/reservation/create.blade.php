@@ -15,77 +15,83 @@
        
     </div>
     @endif
+    <?php var_dump($errors); ?>
     <div class="overflow-x-auto">
-        <form action="{{ route('users.store') }} " method="post"
+        <form action="{{ route('reservation.store') }} " method="post"
             class="w-3/4 bg-white dark:bg-gray-800 m-auto mt-5 mb-5 p-5 rounded shadow-md just">
             @method('POST')
             @csrf
-            <label for="FirstName">Voornaam</label>
-            <input type="text" name="FirstName" id="FirstName" placeholder="John" value="{{ old('FirstName') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('FirstName')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="Infix">Tussenvoegsel</label>
-            <input type="text" name="Infix" id="Infix" placeholder="Van" value="{{ old('Infix') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2">
-            @error('Infix')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="LastName">Achternaam</label>
-            <input type="text" name="LastName" id="LastName" placeholder="Doe" value="{{ old('LastName') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700"required >
-            @error('LastName')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="BirthDate">Geboorte datum</label>
-            <input type="date" name="BirthDate" id="BirthDate" value="{{ old('BirthDate') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('BirthDate')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <div class="w-full bg-black h-1 my-3"></div>
-            <label for="Username">Gebruikersnaam</label>
-            <input type="text" name="Username" id="Username" placeholder="JohnDoe14" value="{{ old('Username') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('Username')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="Email">Email</label>
-            <input type="email" name="Email" id="Email" placeholder="Email@mail.com"  value="{{ old('Email') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('Email')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="Password">Wachtwoord</label>
-            <input type="password" name="Password" id="Password" placeholder="123456789" value="{{ old('Password') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('Password')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <label for="PasswordRepeat">Herhaal wachtwoord</label>
-            <input type="password" name="PasswordRepeat" id="PasswordRepeat" placeholder="123456789" value="{{ old('PasswordRepeat') }}"
-                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700" required>
-            @error('PasswordRepeat')
-            <p class="text-red-500">{{ $message }}</p>
-            @enderror
-            <div class="w-full bg-black h-1 my-3"></div>
-            <select name="Role" id="Role" class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2"
+            <label for="SearchCustomerName">Klantnaam</label>
+            @livewire('search-customer')
+
+            <label for="BowlingLaneId">Bowlinglaan type</label>
+            <select name="BowlingLaneId" id="BowlingLaneId" class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2"
                 required>
-                <option value="nothing" selected>Selecteer een rol</option>
-                <option value="Gebruiker">Gebruiker</option>
-                <option value="Administrator">Administrator</option>
+                <option value="nothing" selected>Selecteer een baan</option>
+                <option value="1" class="w-full">normale baan</option>
+                <option value="2" class="w-full">baan met automatische hekjes</option>
             </select>
-            @error('Role')
+            @error('BowlLane')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
+
+
+            <label for="ResReservationDateDate">Datum</label>
+            <input type="date" name="ReservationDate" id="ReservationDate" placeholder="" value="{{ old('ResDate') }}"
+                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
+            @error('ResDate')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+
+            <label for="ReservationTime">Tijd</label>
+            <input type="time" name="ReservationTime" id="ReservationTime" placeholder="" value="{{ old('ResTime') }}"
+                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
+            @error('ResTime')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+
+            <label for="AmountOfHours">Aantal uren</label>
+            <input type="number" name="AmountOfHours" id="AmountOfHours" placeholder="2" value="{{ old('ResHours') }}"
+                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
+            @error('ResHours')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+
+            <label for="Adults">Aantal volwassenen</label>
+            <input type="number" name="Adults" id="Adults" placeholder="2" value="{{ old('ResAdults') }}"
+                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
+            @error('ResAdults')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+            <label for="Kids">Aantal kinderen</label>
+            <input type="number" name="Kids" id="Kids" placeholder="2" value="{{ old('ResKids') }}"
+                class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
+            @error('ResKids')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+
+            <label for="Extra">Extra's</label>
+            <select name="Extra" id="Extra" class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2"
+                required>
+                <option value="null" selected>Selecteer een extra</option>
+                <option value="1" class="w-full">Snackpakket basis</option>
+                <option value="2" class="w-full">Snackpakket luxe</option>
+                <option value="3" class="w-full">Kinderpartij</option>
+                <option value="4" class="w-full">Vrijgezellenfeest</option>
+            </select>
+            @error('Extra')
+            <p class="text-red-500">{{ $message }}</p>
+            @enderror
+
+            
+            
             <button type="submit"
                 class="bg-green-700 text-white p-2 rounded hover:bg-green-800 dark:hover:bg-green-900">Opslaan</button>
         </form>
 
         <div class="w-full justify-center flex my-6">
             {{-- button to create a new user --}}
-            <a href="{{ route('users.index') }}"
+            <a href="{{ route('reservation.index') }}"
                 class="bg-blue-700 text-white p-2 rounded hover:bg-blue-800 dark:hover:bg-blue-900">Terug naar
                 overzicht</a>
 
