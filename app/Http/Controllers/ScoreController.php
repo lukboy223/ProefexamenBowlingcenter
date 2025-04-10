@@ -221,43 +221,66 @@ class ScoreController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            // Valideer de request data - removed Opmerking field
-            $validatedData = $request->validate([
+            // Validate the request data with explicit error messages
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
                 'Score' => 'required|integer|min:0|max:300',
-                // Removed Opmerking field from validation
+            ], [
+                'Score.required' => 'Ongeldige scorewaarde. Probeer het opnieuw.',
+                'Score.integer' => 'Ongeldige scorewaarde. Probeer het opnieuw.',
+                'Score.min' => 'Ongeldige scorewaarde. De minimale score is 0.',
+                'Score.max' => 'Ongeldige scorewaarde. De maximale score is 300.',
             ]);
-            
+
+            // If validation fails, throw ValidationException to be caught below
+            if ($validator->fails()) {
+                Log::warning('Score validation failed: ' . json_encode($validator->errors()->all()));
+                throw new \Illuminate\Validation\ValidationException($validator);
+            }
+
+            $validatedData = $validator->validated();
+                
             // Controleer of de score bestaat
             $score = DB::table('scores')
                 ->where('Id', $id)
                 ->where('IsActief', 1)
                 ->first();
-                
+                    
             if (!$score) {
                 return redirect()->route('scores.index')
                     ->with('error', 'De gevraagde score kon niet worden gevonden.');
             }
-            
-            // Bereid de update data voor - removed Opmerking field
+                
+            // Bereid de update data voor
             $updateData = [
                 'Score' => $validatedData['Score'],
-                // Removed Opmerking from update data
                 'updated_at' => now(),
             ];
-            
+                
             // Debug voor update
             Log::info('Attempting to update score data:', $updateData);
-            
+                
             // Update de score in de database
             $updated = DB::table('scores')
                 ->where('Id', $id)
                 ->update($updateData);
-            
+                
             // Redirect terug met succesbericht
             return redirect()->route('scores.index')
                 ->with('success', "Score is succesvol bijgewerkt.");
-        } catch (\Exception $e) {
+        } 
+        catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation error specifically for the scenario
+            Log::warning('Validation error when updating score: ' . json_encode($e->errors()));
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with('error', 'Ongeldige scorewaarde. Probeer het opnieuw.');
+        } 
+        catch (\Exception $e) {
+            // Handle other errors
             Log::error('Error updating score: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+                
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Er is iets misgegaan bij het bijwerken van de score.');
