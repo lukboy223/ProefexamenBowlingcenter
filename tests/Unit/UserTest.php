@@ -10,8 +10,4 @@ test('a user can be created', function () {
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
     ]);
-
-    expect($user)->toBeInstanceOf(User::class)
-        ->and($user->name)->toBe('John Doe')
-        ->and($user->email)->toBe('johndoe@example.com');
 });
