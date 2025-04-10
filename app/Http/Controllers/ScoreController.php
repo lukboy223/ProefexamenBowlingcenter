@@ -286,4 +286,66 @@ class ScoreController extends Controller
                 ->with('error', 'Er is iets misgegaan bij het bijwerken van de score.');
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            // Log the delete attempt
+            Log::info('Score deletion attempt for ID: ' . $id);
+            
+            // The confirmation check is handled client-side via the onclick attribute
+            // If the user cancels, the form won't be submitted and this method won't be called
+
+            // Find the score to be deleted
+            $score = DB::table('scores')
+                ->where('Id', $id)
+                ->where('IsActief', 1)
+                ->first();
+                
+            if (!$score) {
+                Log::warning('Score not found for deletion: ID ' . $id);
+                return redirect()->route('scores.index')
+                    ->with('error', 'De gevraagde score kon niet worden gevonden.');
+            }
+
+            // Get person information for the success message
+            $person = DB::table('people')
+                ->where('Id', $score->PeopleId)
+                ->first();
+            
+            $personName = '';
+            if ($person) {
+                $firstName = $person->FirstName ?? $person->first_name ?? $person->firstname ?? '';
+                $lastName = $person->LastName ?? $person->last_name ?? $person->lastname ?? '';
+                $personName = trim("$firstName $lastName");
+            }
+
+            // Perform a soft delete by setting IsActief to 0
+            $deleted = DB::table('scores')
+                ->where('Id', $id)
+                ->update([
+                    'IsActief' => 0,
+                    'updated_at' => now()
+                ]);
+            
+            Log::info('Score soft deleted successfully: ID ' . $id);
+            
+            // Create success message with customer name if available
+            $successMessage = $personName 
+                ? "Score van {$personName} is succesvol verwijderd." 
+                : "Score is succesvol verwijderd.";
+            
+            return redirect()->route('scores.index')
+                ->with('success', $successMessage);
+                
+        } catch (\Exception $e) {
+            // Log error details
+            Log::error('Error deleting score: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            // Redirect with error message
+            return redirect()->route('scores.index')
+                ->with('error', 'Er is iets misgegaan bij het verwijderen van de score.');
+        }
+    }
 }
