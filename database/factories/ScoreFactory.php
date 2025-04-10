@@ -17,8 +17,8 @@ class ScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'PeopleId' => $this->faker->numberBetween(1, 10),
-            'Score' => $this->faker->numberBetween(0, 300),
+            'PeopleId' => \App\Models\People::factory(),
+            'Score' => $this->faker->numberBetween(0, 300)
         ];
     }
 }

@@ -14,4 +14,11 @@ class Score extends Model
         'PeopleId',
         'Score',
     ];
+
+
+    public function person()
+    {
+        return $this->belongsTo(People::class, 'PeopleId');
+    }
+
 }
