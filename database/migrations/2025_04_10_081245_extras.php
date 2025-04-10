@@ -16,13 +16,13 @@ return new class extends Migration
         drop table if exists Extras;
         CREATE TABLE Extras (
     Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(10) NOT NULL,
+    Name VARCHAR(50) NOT NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(250) DEFAULT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
     primary key (id)
-    );
+    )engine=innoDB;
         ');
     }
 

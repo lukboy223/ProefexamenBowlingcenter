@@ -18,7 +18,9 @@ return new class extends Migration
     Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     CustomerId INT UNSIGNED NOT NULL,
     BowlingLaneId INT UNSIGNED NOT NULL,
-    ReservationDateTime DATETIME(6) NOT NULL,
+    ReservationDate Date not null,
+    ReservationTime time NOT NULL,
+    AmountOfHours tinyint unsigned not null,
     Price DECIMAL(5,2) NOT NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(250) DEFAULT NULL,
@@ -27,7 +29,7 @@ return new class extends Migration
     primary key (id),
     FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
     FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id)
-);
+)engine=innoDB;
         ');
     }
 

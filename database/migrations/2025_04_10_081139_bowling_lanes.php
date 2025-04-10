@@ -23,7 +23,7 @@ return new class extends Migration
     created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
     Primary key (id)
-    );
+    )engine=innoDB;
         ');
     }
 

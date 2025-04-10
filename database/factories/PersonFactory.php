@@ -19,7 +19,7 @@ class PersonFactory extends Factory
     {
         return [
             'ReservationId' => Reservation::factory(),
-            'Adults' => fake()->randomDigit(),
+            'Adults' => fake()->randomDigitNotNull(),
             'Kids' => fake()->randomDigit()
         ];
     }

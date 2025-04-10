@@ -19,7 +19,7 @@ class ReservationExtraFactory extends Factory
     public function definition(): array
     {
         return [
-            'ReservationId' => Reservation::factory(),
+            'ReservationId' => fake()->numberBetween(1, 100),
             'ExtrasId' => Extra::factory()
         ];
     }
