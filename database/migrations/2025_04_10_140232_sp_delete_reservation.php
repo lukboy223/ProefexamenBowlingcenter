@@ -19,6 +19,7 @@ return new class extends Migration
             in INReservationId int unsigned
         )
         begin
+            delete from Reservation_extras where ReservationId = INReservationId;
             delete from People where ReservationId = INReservationId;
             delete from Reservations where Id = INReservationId;
         end

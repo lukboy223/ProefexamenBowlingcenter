@@ -111,4 +111,16 @@ class ReservationController extends Controller
             return redirect()->route('reservation.create')->with('error', 'Er is iets fout gegaan bij het aanmaken van de reservering');
         }
     }
+    public function destroy($id)
+    {
+        try{
+            DB::select('call sp_delete_reservation(?)', [$id]);
+            return redirect()->route('reservation.index')->with('success', 'Reservatie succesvol verwijderd');
+        } catch (\Exception $e) {
+            //logs the error in the log
+            Log::error('error deleting reservation: ' . $e->getMessage());
+            //redirects the user to the index page with an error message
+            return redirect()->route('reservation.index')->with('error', 'Er is iets fout gegaan bij het verwijderen van de reservering');
+        }
+    }
 }
