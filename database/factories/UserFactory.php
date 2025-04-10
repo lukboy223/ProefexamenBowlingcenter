@@ -25,8 +25,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'ContactId' => Contact::factory(),
-            // 'RoleId' => fake()->randomDigit(),
+            'ContactId' => Contact::factory(),
+            'RoleId' => fake()->randomDigit(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

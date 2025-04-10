@@ -11,27 +11,28 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        DROP PROCEDURE IF EXISTS GetScoresWithPeopleAndContact;
+        DROP PROCEDURE IF EXISTS GetReservationScores;
     ');
-        DB::unprepared('
-            CREATE PROCEDURE GetScoresWithPeopleAndContact()
-            BEGIN
-                SELECT 
-                    scores.id,
-                    contacts.FirstName,
-                    contacts.Infix,
-                    contacts.LastName,
-                    contacts.FullName,
-                    scores.Score,
-                    scores.IsActief,
-                    scores.Opmerking,
-                    scores.created_at,
-                    scores.updated_at
-                FROM scores
-                INNER JOIN people ON scores.PeopleId = people.id  -- Join met people tabel
-                INNER JOIN contacts ON contacts.id = people.id;  -- Koppel contacts via de id van people
-            END
-        ');
+    
+    DB::unprepared('
+    CREATE PROCEDURE GetReservationScores()
+    BEGIN
+        SELECT 
+            Reservations.ReservationDate, 
+            Reservations.ReservationTime,
+            Contacts.FullName AS CustomerName, 
+            Scores.Score
+        FROM Reservations
+        INNER JOIN Customers ON Reservations.CustomerId = Customers.Id
+        INNER JOIN Contacts ON Customers.AccountId = Contacts.Id
+        INNER JOIN People ON Reservations.Id = People.ReservationId
+        INNER JOIN Scores ON People.Id = Scores.PeopleId
+        WHERE Reservations.IsActief = 1 AND Scores.IsActief = 1;
+        LIMIT givLIMIT OFFSET givOFFSET;
+    END
+');
+
+    
     }
 
     /**
