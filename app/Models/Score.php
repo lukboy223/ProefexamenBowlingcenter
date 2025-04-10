@@ -13,7 +13,5 @@ class Score extends Model
     protected $fillable = [
         'PeopleId',
         'Score',
-        'IsActief',
-        'Opmerking',
     ];
 }

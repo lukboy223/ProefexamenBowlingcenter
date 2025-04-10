@@ -19,8 +19,6 @@ class ScoreFactory extends Factory
         return [
             'PeopleId' => $this->faker->numberBetween(1, 10),
             'Score' => $this->faker->numberBetween(0, 300),
-            'IsActief' => $this->faker->boolean(),
-            'Opmerking' => $this->faker->sentence(),
         ];
     }
 }
