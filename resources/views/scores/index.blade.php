@@ -3,6 +3,15 @@
     <div class="container mx-auto py-8">
         <h1 class="text-bordeaux text-2xl font-bold text-center mb-6">Score overzicht</h1>
 
+        <!-- Knop om naar create pagina te gaan -->
+        <div class="flex justify-end mx-auto max-w-6xl mb-4">
+            <a href="{{ route('scores.create') }}" 
+               style="background-color:rgb(255, 255, 255);" 
+               class="text-black px-4 py-2 rounded font-semibold shadow-md transition">
+                Nieuwe score toevoegen
+            </a>
+        </div>
+
         <!-- Bericht weergeven als een sessie een 'success'-bericht bevat -->
         @if(session()->has('success'))
             <div class="bg-green-100 text-green-800 border border-green-200 p-4 rounded mb-4">
@@ -63,8 +72,8 @@
                 <!-- Knop naar homepage -->
                 <div class="flex justify-end mt-4">
                 <a href="/"
-                    style="background-color: #001f3d;" 
-                    class="text-white px-6 py-2 rounded font-semibold shadow-md transition">Home pagina</a>
+                    style="background-color:rgb(255, 255, 255);" 
+                    class="text-black px-6 py-2 rounded font-semibold shadow-md transition">Home pagina</a>
             </div>
             <!-- Paginatie Links -->
             <div class="mt-6">

@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 // scores
 Route::get('/scores', [ScoreController::class, 'index'])->name('scores.index');
+Route::get('/scores/create', [ScoreController::class, 'create'])->name('scores.create');
+Route::post('/scores', [ScoreController::class, 'store'])->name('scores.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
