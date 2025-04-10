@@ -11,6 +11,9 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
+        DROP PROCEDURE IF EXISTS GetScoresWithPeopleAndContact;
+    ');
+        DB::unprepared('
             CREATE PROCEDURE GetScoresWithPeopleAndContact()
             BEGIN
                 SELECT 

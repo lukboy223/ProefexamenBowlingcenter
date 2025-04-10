@@ -14,24 +14,22 @@ return new class extends Migration
     {
         DB::unprepared('
         drop table if exists Reservations;
-        CREATE TABLE Reservations (
-    Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    CustomerId INT UNSIGNED NOT NULL,
-    BowlingLaneId INT UNSIGNED NOT NULL,
-    ReservationExtrasId INT UNSIGNED NOT NULL,
-    ReservationDateTime DATETIME(6) NOT NULL,
-    Price DECIMAL(5,2) NOT NULL,
-    PeopleId TINYINT UNSIGNED NOT NULL,
-    IsActief BIT NOT NULL DEFAULT 1,
-    Opmerking VARCHAR(250) DEFAULT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
-    updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
-    primary key (id),
-    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
-    FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id),
-    FOREIGN KEY (ReservationExtrasId) REFERENCES ReservationExtras(Id),
-    FOREIGN KEY (PeopleId) REFERENCES People(Id)
-);
+                CREATE TABLE Reservations (
+            Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            CustomerId INT UNSIGNED NOT NULL,
+            BowlingLaneId INT UNSIGNED NOT NULL,
+            ReservationDate Date not null,
+            ReservationTime time NOT NULL,
+            AmountOfHours tinyint unsigned not null,
+            Price DECIMAL(5,2) NOT NULL,
+            IsActief BIT NOT NULL DEFAULT 1,
+            Opmerking VARCHAR(250) DEFAULT NULL,
+            created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
+            updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
+            primary key (id),
+            FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
+            FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id)
+        );
         ');
     }
 

@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ScoreController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// scores
+Route::get('/scores', [ScoreController::class, 'index'])->name('scores.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

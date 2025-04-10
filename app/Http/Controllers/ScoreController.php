@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Score; // Zorg ervoor dat je het juiste pad naar je Score model gebruikt
+use Illuminate\Support\Facades\Log;
 
 class ScoreController extends Controller
 {
