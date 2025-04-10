@@ -18,6 +18,7 @@ return new class extends Migration
         CREATE PROCEDURE GetReservationScores(IN givLIMIT INT, IN givOFFSET INT)
         BEGIN
             SELECT 
+                Scores.Id,  -- Add this line to include the Score ID
                 Reservations.ReservationDate, 
                 Reservations.ReservationTime,
                 Contacts.FullName AS CustomerName, 
@@ -32,6 +33,10 @@ return new class extends Migration
         END
     ');
 
+    DB::unprepared('
+    DROP PROCEDURE IF EXISTS GetActiveReservations;
+');
+
         DB::unprepared('
         CREATE PROCEDURE GetActiveReservations()
         BEGIN
@@ -43,6 +48,10 @@ return new class extends Migration
             INNER JOIN Contacts c ON r.CustomerId = c.Id
             WHERE r.IsActief = 1;
         END
+    ');
+        
+        DB::unprepared('
+        DROP PROCEDURE IF EXISTS GetReservationById;
     ');
 
         DB::unprepared('
@@ -57,6 +66,10 @@ return new class extends Migration
             INNER JOIN Contacts c ON cu.AccountId = c.Id
             WHERE r.Id = reservationId;
         END
+    ');
+
+    DB::unprepared('
+        DROP PROCEDURE IF EXISTS CheckExistingScore;
     ');
 
         DB::unprepared('
@@ -74,7 +87,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP PROCEDURE IF EXISTS GetScoresWithPeopleAndContact');
+        DB::unprepared('DROP PROCEDURE IF EXISTS GetReservationScores');
         DB::unprepared('DROP PROCEDURE IF EXISTS GetActiveReservations');
         DB::unprepared('DROP PROCEDURE IF EXISTS GetReservationById');
         DB::unprepared('DROP PROCEDURE IF EXISTS CheckExistingScore');

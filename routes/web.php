@@ -12,6 +12,9 @@ Route::get('/', function () {
 Route::get('/scores', [ScoreController::class, 'index'])->name('scores.index');
 Route::get('/scores/create', [ScoreController::class, 'create'])->name('scores.create');
 Route::post('/scores', [ScoreController::class, 'store'])->name('scores.store');
+Route::get('/scores/{id}/edit', [ScoreController::class, 'edit'])->name('scores.edit');
+Route::put('/scores/{id}', [ScoreController::class, 'update'])->name('scores.update');
+Route::delete('/scores/{id}', [ScoreController::class, 'destroy'])->name('scores.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

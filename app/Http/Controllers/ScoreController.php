@@ -136,4 +136,131 @@ class ScoreController extends Controller
                 ->with('error', 'Er is iets misgegaan bij het toevoegen van de score: ' . $e->getMessage());
         }
     }
+
+    public function edit($id)
+    {
+        try {
+            // Enhanced logging to trace the issue
+            Log::info('Edit method called with ID: ' . $id);
+            
+            // Haal de score op voor bewerking
+            $score = DB::table('scores')
+                ->where('Id', $id)
+                ->first();  // Removed IsActief check temporarily for debugging
+                
+            if (!$score) {
+                Log::error('Score not found with ID: ' . $id);
+                return redirect()->route('scores.index')
+                    ->with('error', 'De gevraagde score kon niet worden gevonden.');
+            }
+            
+            // Log score details for debugging
+            Log::info('Score found:', (array)$score);
+            
+            // Check if PeopleId exists before using it
+            if (!isset($score->PeopleId)) {
+                Log::error('Score is missing PeopleId field');
+                return redirect()->route('scores.index')
+                    ->with('error', 'De score bevat geen klantgegevens.');
+            }
+            
+            // Haal persoon op voor weergave
+            $person = DB::table('people')
+                ->where('Id', $score->PeopleId)
+                ->first();
+                
+            if (!$person) {
+                Log::error('Person not found with ID: ' . $score->PeopleId);
+                // Continue anyway, we'll handle missing data in the view
+                $person = new \stdClass();
+                $person->first_name = 'Unknown';
+                $person->last_name = 'Customer';
+            }
+            
+            // Check if ReservationId exists before using it
+            $reservation = null;
+            if (isset($score->ReservationId)) {
+                // Haal reservering op voor weergave with safer joins
+                try {
+                    $reservation = DB::select('
+                        SELECT r.Id as ReservationId, r.ReservationDate, c.FullName 
+                        FROM Reservations r
+                        JOIN Customers cu ON r.CustomerId = cu.Id
+                        JOIN Contacts c ON cu.AccountId = c.Id
+                        WHERE r.Id = ?
+                    ', [$score->ReservationId])[0] ?? null;
+                } catch (\Exception $e) {
+                    Log::error('Error fetching reservation: ' . $e->getMessage());
+                    $reservation = null;
+                }
+            }
+            
+            // If reservation is still null, create a default one
+            if (!$reservation) {
+                $reservation = new \stdClass();
+                $reservation->ReservationId = $score->ReservationId ?? 0;
+                $reservation->ReservationDate = date('Y-m-d');
+                $reservation->FullName = 'Unknown Reservation';
+            }
+            
+            return view('scores.edit', [
+                'score' => $score,
+                'person' => $person,
+                'reservation' => $reservation
+            ]);
+        } catch (\Exception $e) {
+            // More detailed error logging
+            Log::error('Error loading score for edit: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            return redirect()->route('scores.index')
+                ->with('error', 'Er is iets misgegaan bij het laden van de score.');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            // Valideer de request data - removed Opmerking field
+            $validatedData = $request->validate([
+                'Score' => 'required|integer|min:0|max:300',
+                // Removed Opmerking field from validation
+            ]);
+            
+            // Controleer of de score bestaat
+            $score = DB::table('scores')
+                ->where('Id', $id)
+                ->where('IsActief', 1)
+                ->first();
+                
+            if (!$score) {
+                return redirect()->route('scores.index')
+                    ->with('error', 'De gevraagde score kon niet worden gevonden.');
+            }
+            
+            // Bereid de update data voor - removed Opmerking field
+            $updateData = [
+                'Score' => $validatedData['Score'],
+                // Removed Opmerking from update data
+                'updated_at' => now(),
+            ];
+            
+            // Debug voor update
+            Log::info('Attempting to update score data:', $updateData);
+            
+            // Update de score in de database
+            $updated = DB::table('scores')
+                ->where('Id', $id)
+                ->update($updateData);
+            
+            // Redirect terug met succesbericht
+            return redirect()->route('scores.index')
+                ->with('success', "Score is succesvol bijgewerkt.");
+        } catch (\Exception $e) {
+            Log::error('Error updating score: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Er is iets misgegaan bij het bijwerken van de score.');
+        }
+    }
 }
