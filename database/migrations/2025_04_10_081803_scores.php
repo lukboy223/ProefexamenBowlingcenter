@@ -15,16 +15,16 @@ return new class extends Migration
         DB::unprepared('
         drop table if exists Scores;
         CREATE TABLE Scores (
-    Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    PeopleId INT UNSIGNED NOT NULL,
-    Score VARCHAR(100) NOT NULL,
-    IsActief BIT NOT NULL DEFAULT 1,
-    Opmerking VARCHAR(250) DEFAULT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
-    updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
-    primary key (id),
-    FOREIGN KEY (PeopleId) REFERENCES People(Id)
-);
+        Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        PeopleId INT UNSIGNED NOT NULL,
+        Score VARCHAR(100) NOT NULL,
+        IsActief BIT NOT NULL DEFAULT 1,
+        Opmerking VARCHAR(250) DEFAULT NULL,
+        created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
+        updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
+        primary key (id),
+        FOREIGN KEY (PeopleId) REFERENCES People(Id)
+        );
         ');
     }
 
