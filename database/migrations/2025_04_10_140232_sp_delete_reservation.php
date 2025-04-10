@@ -13,16 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists Extras;
-        CREATE TABLE Extras (
-    Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    IsActief BIT NOT NULL DEFAULT 1,
-    Opmerking VARCHAR(250) DEFAULT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
-    updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
-    primary key (id)
-    )engine=innoDB;
+
+        drop procedure if exists sp_delete_reservation;
+        create procedure sp_delete_reservation(
+            in INReservationId int unsigned
+        )
+        begin
+            delete from Reservation_extras where ReservationId = INReservationId;
+            delete from People where ReservationId = INReservationId;
+            delete from Reservations where Id = INReservationId;
+        end
         ');
     }
 

@@ -21,6 +21,7 @@ class PersonFactory extends Factory
             'ReservationId' => Reservation::factory(),  // This assumes you have a Reservation model and factory
             'Adults' => $this->faker->numberBetween(1, 10), // Random number between 1 and 10
             'Kids' => $this->faker->numberBetween(0, 10), // Random number between 0 and 10
+
         ];
     }
 }

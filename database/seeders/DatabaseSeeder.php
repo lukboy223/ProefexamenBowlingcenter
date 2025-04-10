@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Extra;
+use App\Models\Person;
+use App\Models\Reservation;
+use App\Models\ReservationExtra;
 use App\Models\User;
 use App\Models\Score;
 use App\Models\Person;
@@ -39,5 +43,23 @@ class DatabaseSeeder extends Seeder
         Customer::factory(200)->create();
         // bowlinglanes
         Bowlinglane::factory(200)->create();
+            'password' => bcrypt('cookie123')
+        ]);
+
+        // Reservation::factory(200)->create();
+        Person::factory(100)->create();
+        
+        Extra::factory()->create([
+            'Name' => 'Snackpakket basis'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Snackpakket luxe'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Kinderpartij'
+        ]);
+        Extra::factory()->create([
+            'Name' => 'Vrijgezellenfeest'
+        ]);
     }
 }
