@@ -7,6 +7,13 @@ use App\Models\Person;
 use App\Models\Reservation;
 use App\Models\ReservationExtra;
 use App\Models\User;
+use App\Models\Score;
+use App\Models\Person;
+use App\Models\Contact;
+use App\Models\Reservation;
+use App\Models\Customer;
+use App\Models\Bowlinglane;
+// use App\Models\Role;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +29,20 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('cookie123'), // password	
+        ]);
+        // scores
+        Score::factory(200)->create();
+        // people
+        Person::factory(200)->create();
+        // contacts
+        Contact::factory(200)->create();
+        // reservations
+        Reservation::factory(200)->create();
+        // customers
+        Customer::factory(200)->create();
+        // bowlinglanes
+        Bowlinglane::factory(200)->create();
             'password' => bcrypt('cookie123')
         ]);
 
@@ -40,6 +61,5 @@ class DatabaseSeeder extends Seeder
         Extra::factory()->create([
             'Name' => 'Vrijgezellenfeest'
         ]);
-        ReservationExtra::factory(100)->create();
     }
 }
