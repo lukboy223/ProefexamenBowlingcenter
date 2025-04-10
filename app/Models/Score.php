@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Score extends Model
+{
+    /** @use HasFactory<\Database\Factories\ScoreFactory> */
+    use HasFactory;
+    protected $table = 'scores';
+    protected $fillable = [
+        'PeopleId',
+        'Score',
+    ];
+
+
+    public function person()
+    {
+        return $this->belongsTo(People::class, 'PeopleId');
+    }
+
+}

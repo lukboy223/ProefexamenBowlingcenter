@@ -30,6 +30,7 @@ return new class extends Migration
     FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
     FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id)
 )engine=innoDB;
+
         ');
     }
 
