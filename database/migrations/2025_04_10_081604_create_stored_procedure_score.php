@@ -31,6 +31,42 @@ return new class extends Migration
             LIMIT givLIMIT OFFSET givOFFSET;
         END
     ');
+
+        DB::unprepared('
+        CREATE PROCEDURE GetActiveReservations()
+        BEGIN
+            SELECT 
+                r.Id as ReservationId, 
+                r.ReservationDate, 
+                c.FullName
+            FROM Reservations r
+            INNER JOIN Contacts c ON r.CustomerId = c.Id
+            WHERE r.IsActief = 1;
+        END
+    ');
+
+        DB::unprepared('
+        CREATE PROCEDURE GetReservationById(IN reservationId INT)
+        BEGIN
+            SELECT 
+                r.Id as ReservationId, 
+                r.ReservationDate, 
+                c.FullName
+            FROM Reservations r
+            INNER JOIN Customers cu ON r.CustomerId = cu.Id
+            INNER JOIN Contacts c ON cu.AccountId = c.Id
+            WHERE r.Id = reservationId;
+        END
+    ');
+
+        DB::unprepared('
+        CREATE PROCEDURE CheckExistingScore(IN personId INT)
+        BEGIN
+            SELECT * FROM scores 
+            WHERE PeopleId = personId
+            AND IsActief = 1;
+        END
+    ');
     }
 
     /**
@@ -39,5 +75,8 @@ return new class extends Migration
     public function down(): void
     {
         DB::unprepared('DROP PROCEDURE IF EXISTS GetScoresWithPeopleAndContact');
+        DB::unprepared('DROP PROCEDURE IF EXISTS GetActiveReservations');
+        DB::unprepared('DROP PROCEDURE IF EXISTS GetReservationById');
+        DB::unprepared('DROP PROCEDURE IF EXISTS CheckExistingScore');
     }
 };
