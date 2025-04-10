@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'AccountId' => User::factory(),
+            'UserId' => User::factory(),
             'CustomerNr' => fake()->numberBetween(10000, 99999)
         ];
     }

@@ -17,7 +17,7 @@ class ExtraFactory extends Factory
     public function definition(): array
     {
         return [
-            'Name' => fake()->word()
+            'Name' => fake()->randomElement(['Snackpakket basis', 'Snackpakket luxe', 'Kinderpartij', 'Vrijgezellenfeest'])
         ];
     }
 }

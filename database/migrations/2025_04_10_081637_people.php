@@ -25,7 +25,7 @@ return new class extends Migration
     updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
     primary key (id),
     FOREIGN KEY (ReservationId) REFERENCES Reservations(Id)
-);
+)engine=innoDB;
         ');
     }
 
