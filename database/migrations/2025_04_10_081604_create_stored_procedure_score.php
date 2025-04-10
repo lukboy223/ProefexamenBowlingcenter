@@ -14,25 +14,23 @@ return new class extends Migration
         DROP PROCEDURE IF EXISTS GetReservationScores;
     ');
     
-    DB::unprepared('
-    CREATE PROCEDURE GetReservationScores()
-    BEGIN
-        SELECT 
-            Reservations.ReservationDate, 
-            Reservations.ReservationTime,
-            Contacts.FullName AS CustomerName, 
-            Scores.Score
-        FROM Reservations
-        INNER JOIN Customers ON Reservations.CustomerId = Customers.Id
-        INNER JOIN Contacts ON Customers.AccountId = Contacts.Id
-        INNER JOIN People ON Reservations.Id = People.ReservationId
-        INNER JOIN Scores ON People.Id = Scores.PeopleId
-        WHERE Reservations.IsActief = 1 AND Scores.IsActief = 1;
-        LIMIT givLIMIT OFFSET givOFFSET;
-    END
-');
-
-    
+        DB::unprepared('
+        CREATE PROCEDURE GetReservationScores(IN givLIMIT INT, IN givOFFSET INT)
+        BEGIN
+            SELECT 
+                Reservations.ReservationDate, 
+                Reservations.ReservationTime,
+                Contacts.FullName AS CustomerName, 
+                Scores.Score
+            FROM Reservations
+            INNER JOIN Customers ON Reservations.CustomerId = Customers.Id
+            INNER JOIN Contacts ON Customers.AccountId = Contacts.Id
+            INNER JOIN People ON Reservations.Id = People.ReservationId
+            INNER JOIN Scores ON People.Id = Scores.PeopleId
+            WHERE Reservations.IsActief = 1 AND Scores.IsActief = 1
+            LIMIT givLIMIT OFFSET givOFFSET;
+        END
+    ');
     }
 
     /**

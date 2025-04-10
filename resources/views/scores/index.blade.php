@@ -10,16 +10,23 @@
             </div>
         @endif
 
+        <!-- Bericht weergeven als een sessie een 'error'-bericht bevat -->
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Tabel met alle reizen -->
         <div class="overflow-x-auto mx-auto max-w-6xl">
             <table class="table-auto w-full bg-white border-collapse border border-gray-200 shadow-md">
-                <thead style="background-color: #001f3d;" class="text-white">
+                <thead style="background-color:rgb(255, 255, 255);" class="text-white">
                     <tr>
-                        <th class="px-4 py-2 border border-gray-300">Datum reservering</th>
-                        <th class="px-4 py-2 border border-gray-300">Naam</th>
-                        <th class="px-4 py-2 border border-gray-300">Score</th>
-                        <th class="px-4 py-2 border border-gray-300">Aanpassen</th>
-                        <th class="px-4 py-2 border border-gray-300">Annuleren</th>
+                        <th class="px-4 py-2 text-black border border-gray-300">Datum reservering</th>
+                        <th class="px-4 py-2 text-black border border-gray-300">Naam</th>
+                        <th class="px-4 py-2 text-black border border-gray-300">Score</th>
+                        <th class="px-4 py-2 text-black border border-gray-300">Aanpassen</th>
+                        <th class="px-4 py-2 text-black border border-gray-300">Annuleren</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,15 +37,15 @@
                     @else
                     @foreach($scores as $score)
                     <tr class="text-center hover:bg-gray-50">
-                        <td class="px-4 py-2 border border-gray-300">{{ $score->created_at ? date('d-m-Y', strtotime($score->created_at)) : 'Geen datum' }}</td>
-                        <td class="px-4 py-2 border border-gray-300">{{ $score->FirstName ?? '' }} {{ $score->Infix ?? '' }} {{ $score->LastName ?? '' }}</td>
+                        <td class="px-4 py-2 border border-gray-300">{{ date('d-m-Y', strtotime($score->ReservationDate)) }}</td>
+                        <td class="px-4 py-2 border border-gray-300">{{ $score->CustomerName }}</td>
                         <td class="px-4 py-2 border border-gray-300">{{ $score->Score }}</td>
                         <td class="px-4 py-2 border border-gray-300">
-                            <a href="{{ route('scores.edit', $score->Id ?? $score->id) }}" 
+                            <a href="#" 
                             class="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">Aanpassen</a>
                         </td>
                         <td class="px-4 py-2 border border-gray-300">
-                            <form action="{{ route('scores.destroy', $score->Id ?? $score->id) }}" method="POST">
+                            <form action="#" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" 

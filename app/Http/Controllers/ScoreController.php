@@ -16,31 +16,35 @@ class ScoreController extends Controller
         $page = $request->input('page', 1);
         $offset = ($page - 1) * $perPage;
 
-        // Haal het totaal aantal scores op (voor paginering)
-        $total = DB::table('scores')->count();
-
-        // Probeer de opgeslagen procedure aan te roepen
         try {
-            $scores = DB::select('CALL ReadScores(?, ?)', [$perPage, $offset]);
+            // Haal het totaal aantal scores op (voor paginering)
+            $total = DB::table('scores')->count();
+
+            // Roep de opgeslagen procedure aan
+            $scores = DB::select('CALL GetReservationScores(?, ?)', [$perPage, $offset]);
+
+            // Maak een LengthAwarePaginator object voor paginering
+            $scores = new \Illuminate\Pagination\LengthAwarePaginator(
+                $scores, 
+                $total, 
+                $perPage, 
+                $page, 
+                [
+                    'path' => $request->url(),
+                    'query' => $request->query(),
+                ]
+            );
+
+            // Retourneer de view met de scores
+            return view('scores.index', ['scores' => $scores]);
         } catch (\Exception $e) {
-            // Lege array als de procedure niet bestaat of een fout optreedt
-            $scores = [];
+            // Log de fout voor debugging doeleinden
+            Log::error('Error loading scores: ' . $e->getMessage());
+            
+            // Redirect terug met een foutmelding
+            return redirect()->back()->with('error', 
+                'Er is iets misgegaan bij het laden van de scores. Probeer het later opnieuw of neem contact op met de beheerder.');
         }
-
-        // Maak een LengthAwarePaginator object voor paginering
-        $scores = new \Illuminate\Pagination\LengthAwarePaginator(
-            $scores, 
-            $total, 
-            $perPage, 
-            $page, 
-            [
-                'path' => $request->url(),
-                'query' => $request->query(),
-            ]
-        );
-
-        // Retourneer de view met de scores
-        return view('scores.index', ['scores' => $scores]);
     }
 
     
