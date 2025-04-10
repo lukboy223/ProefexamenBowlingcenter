@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop table if exists ReservationExtras;
-        CREATE TABLE ReservationExtras (
+        drop table if exists Reservation_extras;
+        CREATE TABLE Reservation_extras (
     Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     ReservationId INT UNSIGNED NOT NULL,
     ExtrasId INT UNSIGNED NOT NULL,
@@ -25,7 +25,7 @@ return new class extends Migration
     primary key (id),
     FOREIGN KEY (ReservationId) REFERENCES Reservations(Id),
     FOREIGN KEY (ExtrasId) REFERENCES Extras(Id)
-);
+)engine=innoDB;
         ');
     }
 

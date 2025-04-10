@@ -16,15 +16,15 @@ return new class extends Migration
         drop table if exists Employees;
         CREATE TABLE Employees (
     Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    AccountId INT UNSIGNED NOT NULL,
+    UserId BIGINT UNSIGNED NOT NULL,
     EmployeeNr INT NOT NULL,
     IsActief BIT NOT NULL DEFAULT 1,
     Opmerking VARCHAR(250) DEFAULT NULL,
     created_at DATETIME(6) NOT NULL DEFAULT NOW(6),
     updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
     primary key (id),
-    FOREIGN KEY (AccountId) REFERENCES users(Id)
-);
+    FOREIGN KEY (UserId) REFERENCES users(id)
+)engine=innoDB;
         ');
     }
 
