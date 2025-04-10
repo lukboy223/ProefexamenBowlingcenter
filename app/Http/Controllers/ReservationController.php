@@ -38,7 +38,7 @@ class ReservationController extends Controller
             'query' => $request->query(),
         ]);
 
-        //redirect the user to the index page with all the users
+        //redirect the user to the index page with all the reservations
 
         return view('Reservation.index', ['reservations' => $reservations]);
 
