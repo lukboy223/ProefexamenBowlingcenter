@@ -15,7 +15,7 @@ return new class extends Migration
         DB::unprepared('
         drop table if exists Contacts;
         CREATE TABLE Contacts (
-    Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    Id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     FirstName VARCHAR(50) NOT NULL,
     Infix VARCHAR(10),
     LastName VARCHAR(50) NOT NULL,

@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Extra extends Model
 {
     use HasFactory;
-
     protected $table = 'Extras'; // Explicitly set the table name
+
 }
