@@ -25,7 +25,7 @@ return new class extends Migration
                 Scores.Score
             FROM Reservations
             INNER JOIN Customers ON Reservations.CustomerId = Customers.Id
-            INNER JOIN Contacts ON Customers.AccountId = Contacts.Id
+            INNER JOIN Contacts ON Customers.UserId = Contacts.Id
             INNER JOIN People ON Reservations.Id = People.ReservationId
             INNER JOIN Scores ON People.Id = Scores.PeopleId
             WHERE Reservations.IsActief = 1 AND Scores.IsActief = 1
@@ -63,7 +63,7 @@ return new class extends Migration
                 c.FullName
             FROM Reservations r
             INNER JOIN Customers cu ON r.CustomerId = cu.Id
-            INNER JOIN Contacts c ON cu.AccountId = c.Id
+            INNER JOIN Contacts c ON cu.UserId = c.Id
             WHERE r.Id = reservationId;
         END
     ');

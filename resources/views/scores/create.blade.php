@@ -13,7 +13,7 @@
                 @csrf
                 
                 <div class="mb-4">
-                    <label for="ReservationId" class="block text-gray-700 font-medium mb-2">Reservering</label>
+                    <!-- <label for="ReservationId" class="block text-gray-700 font-medium mb-2">Reservering</label>
                     <select id="ReservationId" name="ReservationId" 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required>
@@ -28,6 +28,24 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <div class="mb-4">
+                    <label for="PeopleId" class="block text-gray-700 font-medium mb-2">Klant</label>
+                    <select id="PeopleId" name="PeopleId" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                        <option value="">Selecteer een klant</option>
+                        @foreach($people as $person)
+                            <option value="{{ $person->Id }}" {{ old('PeopleId') == $person->Id ? 'selected' : '' }}>
+                                {{ $person->FirstName ?? $person->firstname ?? $person->first_name ?? 'Unknown' }} 
+                                {{ $person->LastName ?? $person->lastname ?? $person->last_name ?? '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('PeopleId')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div> -->
 
                 <div class="mb-4">
                     <label for="PeopleId" class="block text-gray-700 font-medium mb-2">Klant</label>

@@ -17,7 +17,7 @@ class ScoreController extends Controller
 
         $total = DB::table('reservations')
             ->join('customers', 'reservations.CustomerId', '=', 'customers.Id')
-            ->join('contacts', 'customers.AccountId', '=', 'contacts.Id')
+            ->join('contacts', 'customers.UserId', '=', 'contacts.Id')
             ->join('people', 'reservations.Id', '=', 'people.ReservationId')
             ->join('scores', 'people.Id', '=', 'scores.PeopleId')
             ->where('reservations.IsActief', 1)
@@ -49,23 +49,16 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'ReservationId' => 'required|integer|exists:reservations,Id',
-            'PeopleId' => 'required|integer|exists:people,Id',
             'Score' => 'required|integer|min:0|max:300',
+            'PeopleId' => 'required|exists:contacts,Id', // Validate that the person exists
         ]);
 
-        $alreadyScored = DB::table('scores')
-            ->where('PeopleId', $validated['PeopleId'])
-            ->where('IsActief', 1)
-            ->exists();
-
-        if ($alreadyScored) {
-            return back()->withInput()->with('error', 'Deze klant heeft al een score.');
-        }
-
         DB::table('scores')->insert([
-            'PeopleId' => $validated['PeopleId'],
             'Score' => $validated['Score'],
+            'PeopleId' => $validated['PeopleId'],
+            'IsActief' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         return redirect()->route('scores.index')->with('success', 'Score is succesvol toegevoegd.');
@@ -85,7 +78,7 @@ class ScoreController extends Controller
 
         $reservation = DB::table('reservations as r')
             ->join('customers as cu', 'r.CustomerId', '=', 'cu.Id')
-            ->join('contacts as c', 'cu.AccountId', '=', 'c.Id')
+            ->join('contacts as c', 'cu.UserId', '=', 'c.Id')
             ->where('r.Id', $score->ReservationId ?? 0)
             ->select('r.Id as ReservationId', 'r.ReservationDate', 'c.FullName')
             ->first() ?? (object)[

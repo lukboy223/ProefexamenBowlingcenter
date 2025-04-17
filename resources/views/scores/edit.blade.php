@@ -9,7 +9,7 @@
         @endif
 
         <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-            <form action="{{ route('scores.update', $score->Id) }}" method="POST">
+            <form action="{{ route('scores.update', $score->Id) }}" method="POST" class="w-full">
                 @csrf
                 @method('PUT')
                 
@@ -37,14 +37,13 @@
                     @enderror
                 </div>
 
-                <div class="flex justify-between">
+                <div class="flex justify-between mt-6">
                     <a href="{{ route('scores.index') }}" 
                        class="bg-gray-500 text-white px-4 py-2 rounded font-medium hover:bg-gray-600">
                         Annuleren
                     </a>
                     <button type="submit" 
-                            style="background-color: #001f3d;"
-                            class="text-white px-4 py-2 rounded font-medium hover:opacity-90">
+                            class="bg-[#001f3d] text-white px-4 py-2 rounded font-medium hover:opacity-90">
                         Opslaan
                     </button>
                 </div>
