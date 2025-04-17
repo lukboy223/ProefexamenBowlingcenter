@@ -48,8 +48,8 @@ return new class extends Migration
         where CONT.Id = INContactIdId;
 
         insert into reservations
-        (CustomerId, BowlingLaneId, ReservationDate, ReservationTime, AmountOfHours, Price) Values
-        (SELCustomerId, INBowlingLaneId, INReservationDate, INReservationTime, INAmountOfHours, INPrice);
+        (CustomerId, ExtrasId, BowlingLaneId, ReservationDate, ReservationTime, AmountOfHours, Price) Values
+        (SELCustomerId, INExtraId, INBowlingLaneId, INReservationDate, INReservationTime, INAmountOfHours, INPrice);
 
         set SELreservationsId = LAST_INSERT_ID();
 
@@ -57,9 +57,6 @@ return new class extends Migration
         (ReservationId, Adults, Kids) values
         (SELreservationsId, INAdults, INKids);
 
-        insert into Reservation_extras
-        (ReservationId, ExtrasId) values
-        (SELreservationsId, INExtraId);
 
         end
         ');

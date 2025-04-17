@@ -12,7 +12,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared('');
+        DB::unprepared('
+        drop procedure if exists sp_update_reservation;
+        create procedure sp_update_reservation(
+         in givReservationId int
+        
+        )
+        begin
+
+
+
+        end
+        ');
     }
 
     /**
