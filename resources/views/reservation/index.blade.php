@@ -103,8 +103,8 @@
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300">Verwijder gebruiker</h2>
-            <p class="my-4 text-gray-500 dark:text-gray-400">Weet je zeker dat je deze gebruiker wil verwijderen?</p>
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300">Verwijder reservering</h2>
+            <p class="my-4 text-gray-500 dark:text-gray-400">Weet je zeker dat je deze reservering wil verwijderen?</p>
             <form id="deleteForm" method="POST">
                 @csrf
                 @method('DELETE')
