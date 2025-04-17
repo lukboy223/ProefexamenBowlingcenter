@@ -18,11 +18,12 @@ class ReservationController extends Controller
         $page = $request->input('page', 1);
         $offset = ($page - 1) * $perPage;
 
-        $total = DB::table('users')->count();
+        $total = DB::table('Reservations')->count();
 
         // try catch looks if the SP exists
         try{
             $reservations = DB::select('call sp_read_reservations(?, ?)', [$perPage, $offset]);
+            
 
         } catch (\Exception $e) {
             //logs the error in the log

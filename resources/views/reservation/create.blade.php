@@ -15,7 +15,6 @@
        
     </div>
     @endif
-    <?php var_dump($errors); ?>
     <div class="overflow-x-auto">
         <form action="{{ route('reservation.store') }} " method="post"
             class="w-3/4 bg-white dark:bg-gray-800 m-auto mt-5 mb-5 p-5 rounded shadow-md just">

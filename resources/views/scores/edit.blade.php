@@ -9,7 +9,8 @@
         @endif
 
         <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-            <form action="{{ route('scores.update', $score->Id) }}" method="POST">
+            <form action="{{ route('scores.update', $score->Id) }}" method="POST"
+                class="w-3/4 bg-white dark:bg-gray-800 m-auto mt-5 mb-5 p-5 rounded shadow-md just">
                 @csrf
                 @method('PUT')
                 

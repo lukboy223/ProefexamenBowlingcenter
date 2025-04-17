@@ -11,3 +11,4 @@ class Bowlinglane extends Model
 {
     use hasfactory;
     protected $table = 'Bowlinglanes'; // Explicitly set the table name
+}
