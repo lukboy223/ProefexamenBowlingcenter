@@ -22,7 +22,8 @@ class ReservationFactory extends Factory
     {
         return [
             'CustomerId' => Customer::factory(),
-            'BowlingLaneId' => Bowlinglane::factory(),           
+            'BowlingLaneId' => Bowlinglane::factory(),    
+            'ExtrasId' =>  fake()->numberBetween(1, 4),      
             'ReservationTime' => fake()->Time(),
             'ReservationDate' => fake()->date(),
             'Price' => fake()->randomFloat(2, 20, 200),

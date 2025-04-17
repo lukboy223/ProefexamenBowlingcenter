@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('cookie123'), // password	
         ]);
         // scores
-        Score::factory(200)->create();
         // people
         // Person::factory(200)->create();
         // contacts
@@ -40,11 +39,7 @@ class DatabaseSeeder extends Seeder
         // customers
         // Customer::factory(200)->create();
         // bowlinglanes
-        Bowlinglane::factory(200)->create();
-
-        
-        
-
+        // Bowlinglane::factory(200)->create();
 
         
         Extra::factory()->create([
@@ -59,6 +54,8 @@ class DatabaseSeeder extends Seeder
         Extra::factory()->create([
             'Name' => 'Vrijgezellenfeest'
         ]);
-            ReservationExtra::factory(200)->create();
+        // ReservationExtra::factory(100)->create();
+        Reservation::factory(100)->create();
+        Score::factory(200)->create();
     }
 }

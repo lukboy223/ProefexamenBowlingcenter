@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/Reserveringen/maken', [ReservationController::class, 'create'])->name('reservation.create');
     Route::post('/reservering/opslaan', [ReservationController::class, 'store'])->name('reservation.store');
     Route::get('/Reserveringen/aanpasen/{id}', [ReservationController::class, 'edit'])->name('reservation.edit');
+    Route::get('/Reserveringen/wijzigen/{id}', [ReservationController::class, 'edit'])->name('reservation.update');
     Route::delete('/Reserveringen/verwijderen/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
 
 });

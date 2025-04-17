@@ -88,13 +88,18 @@ class ReservationController extends Controller
             } else {
                 $pricePerHour = 24.00; // Default price
             }
+            if($request->BowlingLaneId == 2){
+                $BowlingLaneId = 7;
+            }else{
+                $BowlingLaneId = 2;
+            }
     
             // Calculate the total price
             $price = $pricePerHour * $amountOfHours;
 
             DB::select('call sp_create_reservation(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $request->input('CustomerId'),
-                $request->input('BowlingLaneId'),
+                $BowlingLaneId,
                 $request->input('ReservationDate'),
                 $request->input('ReservationTime'),
                 $request->input('AmountOfHours'),
@@ -112,6 +117,30 @@ class ReservationController extends Controller
             return redirect()->route('reservation.create')->with('error', 'Er is iets fout gegaan bij het aanmaken van de reservering');
         }
     }
+
+    public function edit($id){
+        try{
+
+                $reservation = DB::select('call sp_read_reservation(?)', [$id]);
+
+                
+            }catch (\Exception $e) {
+                //logs the error in the log
+                Log::error('error reading reservation: ' . $e->getMessage());
+                //redirects the user to the create page with an error message
+                return redirect()->route('reservation.index')->with('error', 'Er is iets fout gegaan bij het lezen van de reservatie.');
+            }
+            if($reservation == []){
+                return redirect()->route('reservation.index')->with('error', 'Kon geen reservatie vinden met die id.');
+            }else{
+                return view('Reservation.edit', ['Reservation' => $reservation]);
+            }
+    }
+
+    public function update(Request $request, $id){
+        dd($request);
+    }
+
     public function destroy($id)
     {
         try{
