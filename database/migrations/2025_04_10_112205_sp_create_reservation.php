@@ -27,7 +27,7 @@ return new class extends Migration
         in INAdults tinyint unsigned,
         in INKids tinyint unsigned,
         
-        in INExtraId varchar(50)
+        in INExtraId int unsigned
 
         )
         begin
