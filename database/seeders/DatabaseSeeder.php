@@ -43,9 +43,6 @@ class DatabaseSeeder extends Seeder
         Customer::factory(200)->create();
         // bowlinglanes
         Bowlinglane::factory(200)->create();
-            'password' => bcrypt('cookie123')
-        ]);
-
         // Reservation::factory(200)->create();
         Person::factory(100)->create();
         
