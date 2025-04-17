@@ -21,8 +21,6 @@
             @method('patch')
             @csrf
 
-            <?php var_dump($errors)?>
-
             <label for="SearchCustomerName">Klantnaam</label>
             @livewire('search-customer')
 
@@ -33,40 +31,40 @@
                 <option value="1" @if($Reservation[0]->LaneNR >= 6) selected @endif class="w-full">normale baan</option>
                 <option value="2" @if($Reservation[0]->LaneNR <= 7) selected @endif class="w-full">baan met automatische hekjes</option>
             </select>
-            @error('BowlLane')
+            @error('BowlingLaneId')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
 
 
-            <label for="ResReservationDateDate">Datum</label>
-            <input type="date" name="ReservationDate" id="ReservationDate" placeholder="" value="{{ old('ResDate', $Reservation[0]->ReservationDate) }}"
+            <label for="ReservationDate">Datum</label>
+            <input type="date" name="ReservationDate" id="ReservationDate" placeholder="" value="{{ old('ReservationDate', $Reservation[0]->ReservationDate) }}"
                 class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
-            @error('ResReservationDateDate  ')
+            @error('ReservationDate  ')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
 
             <label for="ReservationTime">Tijd</label>
-            <input type="time" name="ReservationTime" id="ReservationTime" placeholder="" value="{{ old('ResTime', $Reservation[0]->ReservationTime) }}"
+            <input type="time" name="ReservationTime" id="ReservationTime" placeholder="" value="{{ old('ReservationTime', $Reservation[0]->ReservationTime) }}"
                 class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
             @error('ReservationTime')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
 
             <label for="AmountOfHours">Aantal uren</label>
-            <input type="number" name="AmountOfHours" id="AmountOfHours" placeholder="2" value="{{ old('ResHours', $Reservation[0]->AmountOfHours) }}"
+            <input type="number" name="AmountOfHours" id="AmountOfHours" placeholder="2" value="{{ old('AmountOfHours', $Reservation[0]->AmountOfHours) }}"
                 class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
             @error('AmountOfHours')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
 
             <label for="Adults">Aantal volwassenen</label>
-            <input type="number" name="Adults" id="Adults" placeholder="2" value="{{ old('ResAdults', $Reservation[0]->Adults) }}"
+            <input type="number" name="Adults" id="Adults" placeholder="2" value="{{ old('Adults', $Reservation[0]->Adults) }}"
                 class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
             @error('Adults')
             <p class="text-red-500">{{ $message }}</p>
             @enderror
             <label for="Kids">Aantal kinderen</label>
-            <input type="number" name="Kids" id="Kids" placeholder="2" value="{{ old('ResKids', $Reservation[0]->Kids) }}"
+            <input type="number" name="Kids" id="Kids" placeholder="2" value="{{ old('Kids', $Reservation[0]->Kids) }}"
                 class="w-full p-2 rounded border border-gray-300 dark:border-gray-700 mb-2" required>
             @error('Kids')
             <p class="text-red-500">{{ $message }}</p>

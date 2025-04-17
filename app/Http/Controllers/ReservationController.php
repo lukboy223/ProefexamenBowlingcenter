@@ -18,7 +18,7 @@ class ReservationController extends Controller
         $page = $request->input('page', 1);
         $offset = ($page - 1) * $perPage;
 
-        $total = DB::table('Reservations')->count();
+        $total = DB::table('BowlingLanes')->count();
 
         // try catch looks if the SP exists
         try{
@@ -55,8 +55,8 @@ class ReservationController extends Controller
         $request->validate([
             'CustomerId' => 'required|integer',
             'BowlingLaneId' => 'required|integer|exists:BowlingLanes,id',
-            'ReservationDate' => 'required|date',
-            'ReservationTime' => 'required|date_format:H:i',
+            'ReservationDate' => 'required|date|after:yesterday',
+            'ReservationTime' => 'required|date_format:H:i|after:14:00|before:24:00',
             'AmountOfHours' => 'required|integer|min:1|max:10',
             'Adults' => 'required|integer|min:1|max:8',
             'Kids' => 'required|integer|min:0|max:4',
