@@ -87,13 +87,15 @@ class ScoreController extends Controller
                 'FullName' => 'Onbekende reservering'
             ];
 
-        return view('scores.edit', compact('score', 'person', 'reservation'));
+        $people = DB::table('Contacts')->get(['Id', 'FirstName', 'LastName']);
+        return view('scores.edit', compact('score', 'person', 'reservation', 'people'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'Score' => 'required|integer|min:0|max:300',
+            'PeopleId' => 'required|exists:contacts,Id',
         ]);
 
         $score = DB::table('scores')->where('Id', $id)->where('IsActief', 1)->first();
@@ -104,6 +106,7 @@ class ScoreController extends Controller
 
         DB::table('scores')->where('Id', $id)->update([
             'Score' => $validated['Score'],
+            'PeopleId' => $validated['PeopleId'],
             'updated_at' => now(),
         ]);
 

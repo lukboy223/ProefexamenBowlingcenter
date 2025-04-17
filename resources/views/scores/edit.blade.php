@@ -21,10 +21,21 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-medium mb-2">Klant</label>
-                    <div class="px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
-                        {{ $person->FirstName ?? $person->first_name ?? '' }} {{ $person->LastName ?? $person->last_name ?? '' }}
-                    </div>
+                    <label for="PeopleId" class="block text-gray-700 font-medium mb-2">Klant</label>
+                    <select id="PeopleId" name="PeopleId" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                        <option value="">Selecteer een klant</option>
+                        @foreach($people as $p)
+                            <option value="{{ $p->Id }}" {{ old('PeopleId', $score->PeopleId) == $p->Id ? 'selected' : '' }}>
+                                {{ $p->FirstName ?? $p->firstname ?? $p->first_name ?? 'Unknown' }} 
+                                {{ $p->LastName ?? $p->lastname ?? $p->last_name ?? '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('PeopleId')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
