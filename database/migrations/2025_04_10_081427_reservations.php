@@ -18,6 +18,7 @@ return new class extends Migration
     Id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     CustomerId INT UNSIGNED NOT NULL,
     BowlingLaneId INT UNSIGNED NOT NULL,
+    ExtrasId int unsigned not null,
     ReservationDate Date not null,
     ReservationTime time NOT NULL,
     AmountOfHours tinyint unsigned not null,
@@ -28,7 +29,8 @@ return new class extends Migration
     updated_at DATETIME(6) NOT NULL DEFAULT NOW(6) ON UPDATE NOW(6),
     primary key (id),
     FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
-    FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id)
+    FOREIGN KEY (BowlingLaneId) REFERENCES BowlingLanes(Id),
+    FOREIGN KEY (ExtrasId) REFERENCES Extras(Id)
 )engine=innoDB;
 
         ');

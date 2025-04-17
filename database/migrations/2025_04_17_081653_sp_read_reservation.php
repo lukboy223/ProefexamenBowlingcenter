@@ -13,10 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('
-        drop procedure if exists sp_read_reservations;
-        create procedure sp_read_reservations(
-         in givLIMIT int
-        ,in givOFFSET int
+        drop procedure if exists sp_read_reservation;
+        create procedure sp_read_reservation(
+         in givReservationId int
         )
         begin
 
@@ -31,6 +30,7 @@ return new class extends Migration
         ,POE.Kids
         ,RES.Price
         ,EX.Name AS ExtraName
+        ,Ex.Id as ExtraId
 
 
 
@@ -51,16 +51,12 @@ return new class extends Migration
         inner join People as POE
         on RES.Id = POE.ReservationId
 
+
         inner join extras as EX
         on RES.ExtrasId = EX.Id
-
         
-        
-        order by RES.ReservationDate desc, RES.ReservationTime desc
-        limit givLIMIT offset givOFFSET;
-
-
-
+        where RES.Id = givReservationId;
+    
         end
         ');
     }
